@@ -8,7 +8,7 @@ preto = (0,0,0)
 running = True
 #Tela e som
 tamanhoTela = (1800,1000)
-espaco = pygame.image.load("espaco.jpg")
+espaco = pygame.image.load("espaco1.jpg")
 tela = pygame.display.set_mode( tamanhoTela)
 icone = pygame.image.load("iconeNave.png")
 pygame.display.set_icon(icone)
