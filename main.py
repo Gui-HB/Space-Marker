@@ -23,6 +23,11 @@ while running:
             running = False
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
             running = False
+        elif event.type == pygame.MOUSEBUTTONUP:
+            posicao = pygame.mouse.get_pos()
+            #Caixa de pergunta sobre o nome da estrela !
+            caixadepergunta = simpledialog.askstring("Space", "Digite o nome da estrela")
+            print(caixadepergunta)
 
     tela.blit( espaco, (0, 0) )
     pygame.display.update()
