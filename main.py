@@ -28,6 +28,9 @@ while running:
             #Caixa de pergunta sobre o nome da estrela !
             caixadepergunta = simpledialog.askstring("Space", "Digite o nome da estrela")
             print(caixadepergunta)
+            #if caixadepergunta == None:
+                #caixadepergunta = "Desconhecido"+str(posicao)
+            #estrelas[caixadepergunta] = posicao
 
     tela.blit( espaco, (0, 0) )
     pygame.display.update()
