@@ -11,6 +11,15 @@ tamanhoTela = (1800,1000)
 espaco = pygame.image.load("espaco1.jpg")
 tela = pygame.display.set_mode( tamanhoTela)
 icone = pygame.image.load("iconeNave.png")
+#Texto das opções
+textoX = 200
+textoYF10 = 100
+textoYF11 = 135
+textoYF12 = 170
+texto = pygame.font.Font(None, 38)
+renderdotextoF10 = texto.render("Pressione F10 para salvar os pontos", True, branco)
+renderdotextoF11 = texto.render("Pressione F11 para Carregar os pontos", True, branco)
+renderdotextoF12 = texto.render("Pressione F12 para Deletar os pontos", True, branco)
 pygame.display.set_icon(icone)
 pygame.display.set_caption("Space Marker")
 pygame.mixer.music.load("somEspaco.wav")
@@ -33,4 +42,8 @@ while running:
             #estrelas[caixadepergunta] = posicao
 
     tela.blit( espaco, (0, 0) )
+    tela.blit(renderdotextoF10, (textoX, textoYF10))
+    tela.blit(renderdotextoF11, (textoX, textoYF11))
+    tela.blit(renderdotextoF12, (textoX, textoYF12))
+
     pygame.display.update()
