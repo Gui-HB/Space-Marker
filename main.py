@@ -14,14 +14,14 @@ espaco = pygame.image.load("espaco1.jpg")
 tela = pygame.display.set_mode( tamanhoTela)
 icone = pygame.image.load("iconeNave.png")
 #Texto das opções
-textoX = 200
-textoYF10 = 100
-textoYF11 = 135
-textoYF12 = 170
+textoX = 20
+textoYF10 = 20
+textoYF11 = 50
+textoYF12 = 80
 texto = pygame.font.Font(None, 38)
-renderdotextoF10 = texto.render("Pressione F10 para salvar os pontos", True, branco)
-renderdotextoF11 = texto.render("Pressione F11 para Carregar os pontos", True, branco)
-renderdotextoF12 = texto.render("Pressione F12 para Deletar os pontos", True, branco)
+renderdotextoF10 = texto.render("Pressione F10 para salvar os pontos!", True, branco)
+renderdotextoF11 = texto.render("Pressione F11 para Carregar os pontos!", True, branco)
+renderdotextoF12 = texto.render("Pressione F12 para Deletar os pontos!", True, branco)
 pygame.display.set_icon(icone)
 pygame.display.set_caption("Space Marker")
 pygame.mixer.music.load("somEspaco.wav")
