@@ -38,13 +38,15 @@ while running:
 
             posicao = str(pygame.mouse.get_pos())
             nomeEstrela = simpledialog.askstring("Space", "Digite o nome da estrela")
+            if nomeEstrela == "":
+                nomeEstrela = "Desconhecido"
 
             with open("posicaoEstrelas.txt", "a") as arquivo:
                 arquivo.write(nomeEstrela + ": " + posicao + "\n")
             
-            #if nomeEstrela == None:
-                #nomeEstrela = "Desconhecido"+str(posicao)
-            #estrelas[nomeEstrela] = posicao
+            if nomeEstrela == None:
+                nomeEstrela = "Desconhecido"
+            
             
 
     tela.blit( espaco, (0, 0) )
