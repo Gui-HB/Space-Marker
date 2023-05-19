@@ -1,6 +1,6 @@
 import pygame
 import ast
-from tkinter import simpledialog
+from tkinter import simpledialog,messagebox
 
 pygame.init()
 # Cores
@@ -12,10 +12,19 @@ estrelas = []
 x = 0
 y = 0
 # Tela e som
-tamanhoTela = (1800, 1000)
-espaco = pygame.image.load("espaco1.jpg")
-tela = pygame.display.set_mode(tamanhoTela)
-icone = pygame.image.load("iconeNave.png")
+try:
+    tamanhoTela = (1800, 1000)
+    espaco = pygame.image.load("espaco1.jpg")
+    tela = pygame.display.set_mode(tamanhoTela)
+    icone = pygame.image.load("iconeNave.png")
+    pygame.display.set_icon(icone)
+    pygame.display.set_caption("Space Marker")
+    pygame.mixer.music.load("somEspaco.wav")
+    pygame.mixer.music.play(-1)
+except:
+    messagebox.showerror("Erro!","Arquivos de inicialização do jogo não foram carregados corretamente!")
+    pygame.quit()
+    
 
 # Texto das opções
 textoX = 20
@@ -27,12 +36,6 @@ renderdotextoF10 = texto.render("Pressione F10 para salvar os pontos!", True, br
 renderdotextoF11 = texto.render("Pressione F11 para Carregar os pontos!", True, branco)
 renderdotextoF12 = texto.render("Pressione F12 para Deletar os pontos!", True, branco)
 
-pygame.display.set_icon(icone)
-pygame.display.set_caption("Space Marker")
-pygame.mixer.music.load("somEspaco.wav")
-pygame.mixer.music.play(-1)
-
-
 
 while running:
     for event in pygame.event.get():
@@ -40,7 +43,7 @@ while running:
             running = False
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
             running = False
-        elif event.type == pygame.MOUSEBUTTONUP:
+        elif event.type == pygame.MOUSEBUTTONDOWN and event.button == pygame.BUTTON_LEFT or event.type == 1:
 
             posicao = (pygame.mouse.get_pos())
             x, y = posicao
@@ -66,6 +69,8 @@ while running:
                 posicoes.write = ""
             with open("nomePosicao.txt", "w") as nomePosicao:
                 nomePosicao.write = ""
+            tela.fill((0,0,0))
+                
 
 
     
