@@ -1,5 +1,4 @@
-import pygame
-import ast
+import pygame, ast, time
 from tkinter import simpledialog,messagebox
 
 pygame.init()
@@ -9,8 +8,9 @@ preto = (0, 0, 0)
 # Variáveis
 running = True
 estrelas = []
-x = 0
-y = 0
+primeiroClique = True
+
+
 # Tela e som
 try:
     tamanhoTela = (1800, 1000)
@@ -43,36 +43,56 @@ while running:
             running = False
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
             running = False
-        elif event.type == pygame.MOUSEBUTTONDOWN and event.button == pygame.BUTTON_LEFT or event.type == 1:
-
+        elif event.type == pygame.MOUSEBUTTONUP and event.button == pygame.BUTTON_LEFT or event.type == 1:
             posicao = (pygame.mouse.get_pos())
-            x, y = posicao
-            nomeEstrela = simpledialog.askstring("Space", "Digite o nome da estrela")
-            if nomeEstrela == "" or nomeEstrela== None:
-                nomeEstrela = "Desconhecido"
-
-            with open("nomePosicao.txt", "a") as nomePosicao:
-                nomePosicao.write(str(nomeEstrela) + " : " + str(posicao)+"\n")
-            with open("posicoes.txt", "a") as posicoes:
-                posicoes.write(str(posicao)+"\n")
-            pygame.draw.circle(espaco,branco,(x,y),5)
+            if primeiroClique == True:
+                x, y = posicao
+                pygame.draw.circle(espaco,branco,(x,y),5)
+                primeiroClique = False
+                nomeEstrela = simpledialog.askstring("Space", "Digite o nome da estrela")
+                if nomeEstrela == "" or nomeEstrela == None:
+                    nomeEstrela = "Desconhecido"
+                with open("nomePosicao.txt", "a") as nomePosicao:
+                    nomePosicao.write(str(nomeEstrela) + " : " + str(posicao)+"\n")
+                with open("posicoes.txt", "a") as posicoes:
+                    posicoes.write(str(posicao)+"\n")
+                    pygame.draw.circle(espaco,branco,(x,y),5) 
+            else:
+                a, b = posicao
+                pygame.draw.line(espaco,branco,(x,y),(a,b),1)
+                x, y = posicao
+                nomeEstrela = simpledialog.askstring("Space", "Digite o nome da estrela")
+                if nomeEstrela == "" or nomeEstrela == None:
+                    nomeEstrela = "Desconhecido"
+                with open("nomePosicao.txt", "a") as nomePosicao:
+                    nomePosicao.write(str(nomeEstrela) + " : " + str(posicao)+"\n")
+                with open("posicoes.txt", "a") as posicoes:
+                    posicoes.write(str(posicao)+"\n")
+                    pygame.draw.circle(espaco,branco,(x,y),5)                
 
 
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_F11:
             with open("posicoes.txt", "r") as posicoes:
-                for posicao in posicoes:
+                iter_posicoes = iter(posicoes)
+                primeiro_ponto = True
+                ponto_anterior = None
+                
+                for posicao in iter_posicoes:
                     x, y = ast.literal_eval(posicao)
-                    pygame.draw.circle(espaco,branco,(x,y),5)
+                    pygame.draw.circle(espaco, branco, (x, y), 5)
+                    
+                    if primeiro_ponto:
+                        primeiro_ponto = False
+                    else:
+                        pygame.draw.line(espaco, branco, ponto_anterior, (x, y))
+                    
+                    ponto_anterior = (x, y)
         
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_F12:
             with open("posicoes.txt", "w") as posicoes:
                 posicoes.write = ""
             with open("nomePosicao.txt", "w") as nomePosicao:
                 nomePosicao.write = ""
-            tela.fill((0,0,0))
-                
-
-
     
 
     tela.blit( espaco, (0, 0) )
