@@ -45,7 +45,7 @@ while running:
             posicao = (pygame.mouse.get_pos())
             x, y = posicao
             nomeEstrela = simpledialog.askstring("Space", "Digite o nome da estrela")
-            if nomeEstrela == "":
+            if nomeEstrela == "" or nomeEstrela== None:
                 nomeEstrela = "Desconhecido"
 
             with open("nomePosicao.txt", "a") as nomePosicao:
@@ -60,6 +60,12 @@ while running:
                 for posicao in posicoes:
                     x, y = ast.literal_eval(posicao)
                     pygame.draw.circle(espaco,branco,(x,y),5)
+        
+        elif event.type == pygame.KEYDOWN and event.key == pygame.K_F12:
+            with open("posicoes.txt", "w") as posicoes:
+                posicoes.write = ""
+            with open("nomePosicao.txt", "w") as nomePosicao:
+                nomePosicao.write = ""
 
 
     
