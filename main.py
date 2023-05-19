@@ -6,6 +6,8 @@ branco = (255,255,255)
 preto = (0,0,0)
 #Variáveis
 running = True
+estrelas = {}
+
 #Tela e som
 tamanhoTela = (1800,1000)
 espaco = pygame.image.load("espaco1.jpg")
@@ -24,13 +26,17 @@ while running:
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
             running = False
         elif event.type == pygame.MOUSEBUTTONUP:
-            posicao = pygame.mouse.get_pos()
-            #Caixa de pergunta sobre o nome da estrela !
-            caixadepergunta = simpledialog.askstring("Space", "Digite o nome da estrela")
-            print(caixadepergunta)
-            #if caixadepergunta == None:
-                #caixadepergunta = "Desconhecido"+str(posicao)
-            #estrelas[caixadepergunta] = posicao
+
+            posicao = str(pygame.mouse.get_pos())
+            nomeEstrela = simpledialog.askstring("Space", "Digite o nome da estrela")
+
+            with open("posicaoEstrelas.txt", "a") as arquivo:
+                arquivo.write(nomeEstrela + ": " + posicao + "\n")
+            
+            #if nomeEstrela == None:
+                #nomeEstrela = "Desconhecido"+str(posicao)
+            #estrelas[nomeEstrela] = posicao
+            
 
     tela.blit( espaco, (0, 0) )
     pygame.display.update()
