@@ -52,7 +52,7 @@ while running:
                 primeiroClique = False
                 nomeEstrela = simpledialog.askstring("Space", "Digite o nome da estrela")
                 if nomeEstrela == "" or nomeEstrela == None:
-                    nomeEstrela = "Desconhecido"
+                    nomeEstrela = "Desconhecido"+str(posicao)
                 estrelas[nomeEstrela] = posicao
                 with open("nomePosicao.txt", "a") as nomePosicao:
                     nomePosicao.write(str(nomeEstrela) + " : " + str(posicao)+"\n")
@@ -65,7 +65,7 @@ while running:
                 x, y = posicao
                 nomeEstrela = simpledialog.askstring("Space", "Digite o nome da estrela")
                 if nomeEstrela == "" or nomeEstrela == None:
-                    nomeEstrela = "Desconhecido"
+                    nomeEstrela = "Desconhecido"+str(posicao)
                 estrelas[nomeEstrela] = posicao
                 with open("nomePosicao.txt", "a") as nomePosicao:
                     nomePosicao.write(str(nomeEstrela) + " : " + str(posicao)+"\n")
