@@ -7,7 +7,7 @@ branco = (255, 255, 255)
 preto = (0, 0, 0)
 # Variáveis
 running = True
-estrelas = []
+estrelas = {}
 primeiroClique = True
 
 
@@ -32,6 +32,7 @@ textoYF10 = 20
 textoYF11 = 50
 textoYF12 = 80
 texto = pygame.font.Font(None, 38)
+fonte_nome_estrela = pygame.font.Font(None, 24)
 renderdotextoF10 = texto.render("Pressione F10 para salvar os pontos!", True, branco)
 renderdotextoF11 = texto.render("Pressione F11 para Carregar os pontos!", True, branco)
 renderdotextoF12 = texto.render("Pressione F12 para Deletar os pontos!", True, branco)
@@ -52,6 +53,7 @@ while running:
                 nomeEstrela = simpledialog.askstring("Space", "Digite o nome da estrela")
                 if nomeEstrela == "" or nomeEstrela == None:
                     nomeEstrela = "Desconhecido"
+                estrelas[nomeEstrela] = posicao
                 with open("nomePosicao.txt", "a") as nomePosicao:
                     nomePosicao.write(str(nomeEstrela) + " : " + str(posicao)+"\n")
                 with open("posicoes.txt", "a") as posicoes:
@@ -64,6 +66,7 @@ while running:
                 nomeEstrela = simpledialog.askstring("Space", "Digite o nome da estrela")
                 if nomeEstrela == "" or nomeEstrela == None:
                     nomeEstrela = "Desconhecido"
+                estrelas[nomeEstrela] = posicao
                 with open("nomePosicao.txt", "a") as nomePosicao:
                     nomePosicao.write(str(nomeEstrela) + " : " + str(posicao)+"\n")
                 with open("posicoes.txt", "a") as posicoes:
@@ -100,6 +103,9 @@ while running:
     tela.blit(renderdotextoF11, (textoX, textoYF11))
     tela.blit(renderdotextoF12, (textoX, textoYF12))
 
+    for nome, posicao in estrelas.items():
+        nome_surface = fonte_nome_estrela.render(nome, True, branco)
+        tela.blit(nome_surface, posicao)
 
     pygame.display.update()
 pygame.quit()
