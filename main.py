@@ -1,5 +1,6 @@
-import pygame, ast, time
+import pygame, ast
 from tkinter import simpledialog,messagebox
+from funcoes import confirmar_exclusao
 
 pygame.init()
 # Cores
@@ -9,7 +10,7 @@ preto = (0, 0, 0)
 running = True
 estrelas = {}
 primeiroClique = True
-
+continuar_loop = True
 
 # Tela e som
 try:
@@ -92,10 +93,17 @@ while running:
                     ponto_anterior = (x, y)
         
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_F12:
-            with open("posicoes.txt", "w") as posicoes:
-                posicoes.write = ""
-            with open("nomePosicao.txt", "w") as nomePosicao:
-                nomePosicao.write = ""
+            result = messagebox.askyesno("Confirmação", "Deseja realmente apagar os pontos salvos?")
+            if result:
+                pass
+            else:
+                continuar_loop = False
+                
+            if continuar_loop:
+                with open("posicoes.txt", "w") as posicoes:
+                    posicoes.write = ""
+                with open("nomePosicao.txt", "w") as nomePosicao:
+                    nomePosicao.write = ""
     
 
     tela.blit( espaco, (0, 0) )
