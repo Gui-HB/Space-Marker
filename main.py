@@ -1,6 +1,5 @@
 import pygame, ast
 from tkinter import simpledialog,messagebox
-from funcoes import confirmar_exclusao
 
 pygame.init()
 # Cores
@@ -10,7 +9,9 @@ preto = (0, 0, 0)
 running = True
 estrelas = {}
 primeiroClique = True
-continuar_loop = True
+continuarLoop = True
+nomeVazio = False
+nomes_coordenadas = []
 
 # Tela e som
 try:
@@ -32,7 +33,7 @@ textoX = 20
 textoYF10 = 20
 textoYF11 = 50
 textoYF12 = 80
-texto = pygame.font.Font(None, 38)
+texto = pygame.font.Font(None, 24)
 fonte_nome_estrela = pygame.font.Font(None, 24)
 renderdotextoF10 = texto.render("Pressione F10 para salvar os pontos!", True, branco)
 renderdotextoF11 = texto.render("Pressione F11 para Carregar os pontos!", True, branco)
@@ -53,10 +54,14 @@ while running:
                 primeiroClique = False
                 nomeEstrela = simpledialog.askstring("Space", "Digite o nome da estrela")
                 if nomeEstrela == "" or nomeEstrela == None:
-                    nomeEstrela = "Desconhecido"+str(posicao)
+                    nomeEstrela = "Desconhecido"+" : "+str(posicao)
+                    nomeVazio = True
+                else:
+                    nomeEstrela = nomeEstrela +" : "+str(posicao)
+                    
                 estrelas[nomeEstrela] = posicao
                 with open("nomePosicao.txt", "a") as nomePosicao:
-                    nomePosicao.write(str(nomeEstrela) + " : " + str(posicao)+"\n")
+                    nomePosicao.write(str(nomeEstrela)+"\n")
                 with open("posicoes.txt", "a") as posicoes:
                     posicoes.write(str(posicao)+"\n")
                     pygame.draw.circle(espaco,branco,(x,y),5) 
@@ -66,13 +71,18 @@ while running:
                 x, y = posicao
                 nomeEstrela = simpledialog.askstring("Space", "Digite o nome da estrela")
                 if nomeEstrela == "" or nomeEstrela == None:
-                    nomeEstrela = "Desconhecido"+str(posicao)
+                    nomeEstrela = "Desconhecido"+" : "+str(posicao)
+                    nomeVazio = True
+                else:
+                    nomeEstrela = nomeEstrela +" : "+str(posicao)
+            
                 estrelas[nomeEstrela] = posicao
                 with open("nomePosicao.txt", "a") as nomePosicao:
-                    nomePosicao.write(str(nomeEstrela) + " : " + str(posicao)+"\n")
+                    nomePosicao.write(str(nomeEstrela)+"\n")
                 with open("posicoes.txt", "a") as posicoes:
                     posicoes.write(str(posicao)+"\n")
-                    pygame.draw.circle(espaco,branco,(x,y),5)                
+                    pygame.draw.circle(espaco,branco,(x,y),5)    
+            
 
 
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_F11:
@@ -80,7 +90,6 @@ while running:
                 iter_posicoes = iter(posicoes)
                 primeiro_ponto = True
                 ponto_anterior = None
-                
                 for posicao in iter_posicoes:
                     x, y = ast.literal_eval(posicao)
                     pygame.draw.circle(espaco, branco, (x, y), 5)
@@ -89,22 +98,32 @@ while running:
                         primeiro_ponto = False
                     else:
                         pygame.draw.line(espaco, branco, ponto_anterior, (x, y))
-                    
                     ponto_anterior = (x, y)
+
+                with open("nomePosicao.txt", "r") as arquivo:
+                    for linha in arquivo:
+                        nome, coordenadas = linha.strip().split(":")
+                        w, z= map(int, coordenadas.strip()[1:-1].split(","))
+                        nomes_coordenadas.append((nome, w, z))
+                
         
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_F12:
             result = messagebox.askyesno("Confirmação", "Deseja realmente apagar os pontos salvos?")
             if result:
                 pass
             else:
-                continuar_loop = False
-                
-            if continuar_loop:
+                continuarLoop = False
+
+            if continuarLoop:
                 with open("posicoes.txt", "w") as posicoes:
                     posicoes.write = ""
                 with open("nomePosicao.txt", "w") as nomePosicao:
                     nomePosicao.write = ""
     
+    for nome, w, z in nomes_coordenadas:
+        texto_renderizado = texto.render(nome+coordenadas, True, branco)
+        tela.blit(texto_renderizado, (w, z))
+        pygame.display.flip()
 
     tela.blit( espaco, (0, 0) )
     tela.blit(renderdotextoF10, (textoX, textoYF10))
