@@ -123,7 +123,7 @@ while running:
     for nome, w, z in nomes_coordenadas:
         texto_renderizado = texto.render(nome+coordenadas, True, branco)
         tela.blit(texto_renderizado, (w, z))
-        pygame.display.flip()
+        pygame.display.update(tela.blit(texto_renderizado, (w, z)))
 
     tela.blit( espaco, (0, 0) )
     tela.blit(renderdotextoF10, (textoX, textoYF10))
