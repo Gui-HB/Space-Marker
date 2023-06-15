@@ -48,11 +48,15 @@ while running:
             running = False
         elif event.type == pygame.MOUSEBUTTONUP and event.button == pygame.BUTTON_LEFT or event.type == 1:
             posicao = (pygame.mouse.get_pos())
-            if primeiroClique == True:
+            nomeEstrela = simpledialog.askstring("Space", "Digite o nome da estrela")
+            if nomeEstrela == None:
+                
+                continue
+            elif primeiroClique == True:
                 x, y = posicao
                 pygame.draw.circle(espaco,branco,(x,y),5)
                 primeiroClique = False
-                nomeEstrela = simpledialog.askstring("Space", "Digite o nome da estrela")
+
                 if nomeEstrela == "" or nomeEstrela == None:
                     nomeEstrela = "Desconhecido"+" : "+str(posicao)
                     nomeVazio = True
@@ -69,7 +73,7 @@ while running:
                 a, b = posicao
                 pygame.draw.line(espaco,branco,(x,y),(a,b),1)
                 x, y = posicao
-                nomeEstrela = simpledialog.askstring("Space", "Digite o nome da estrela")
+                
                 if nomeEstrela == "" or nomeEstrela == None:
                     nomeEstrela = "Desconhecido"+" : "+str(posicao)
                     nomeVazio = True
