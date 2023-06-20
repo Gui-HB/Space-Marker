@@ -104,8 +104,8 @@ while running:
                         pygame.draw.line(espaco, branco, ponto_anterior, (x, y))
                     ponto_anterior = (x, y)
 
-                with open("nomePosicao.txt", "r") as arquivo:
-                    for linha in arquivo:
+                with open("nomePosicao.txt", "r") as nomePosicao:
+                    for linha in nomePosicao:
                         nome, coordenadas = linha.strip().split(":")
                         w, z= map(int, coordenadas.strip()[1:-1].split(","))
                         nomes_coordenadas.append((nome, w, z))
@@ -121,8 +121,19 @@ while running:
             if continuarLoop:
                 with open("posicoes.txt", "w") as posicoes:
                     posicoes.write = ""
+                    
                 with open("nomePosicao.txt", "w") as nomePosicao:
                     nomePosicao.write = ""
+                    
+                
+        elif event.type == pygame.KEYDOWN and event.key == pygame.K_F10:
+            try:
+                nomePosicao.close()
+                posicoes.close()
+                messagebox.showinfo("","Pontos salvos com sucesso!")
+            except:
+                messagebox.showinfo("ERRO","Não há pontos para salvar!")
+
     
     for nome, w, z in nomes_coordenadas:
         texto_renderizado = texto.render(nome+coordenadas, True, branco)
