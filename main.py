@@ -1,9 +1,8 @@
 import pygame, ast
 from tkinter import simpledialog,messagebox
 
-pygame.init()
-# Cores
-branco = (255, 255, 255)
+pygame.init() #Inicio do Pygame
+branco = (255, 255, 255) #Cores
 preto = (0, 0, 0)
 # Variáveis
 running = True
@@ -12,8 +11,7 @@ primeiroClique = True
 continuarLoop = True
 nomeVazio = False
 nomes_coordenadas = []
-
-# Tela e som
+# Tela e áudio
 try:
     tamanhoTela = (1800, 1000)
     espaco = pygame.image.load("espaco1.jpg")
@@ -26,8 +24,6 @@ try:
 except:
     messagebox.showerror("Erro!","Arquivos de inicialização do jogo não foram carregados corretamente!")
     pygame.quit()
-    
-
 # Texto das opções
 textoX = 20
 textoYF10 = 20
@@ -38,8 +34,7 @@ fonte_nome_estrela = pygame.font.Font(None, 24)
 renderdotextoF10 = texto.render("Pressione F10 para salvar os pontos!", True, branco)
 renderdotextoF11 = texto.render("Pressione F11 para Carregar os pontos!", True, branco)
 renderdotextoF12 = texto.render("Pressione F12 para Deletar os pontos!", True, branco)
-
-
+#Inicio do While principal do programa
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -87,8 +82,6 @@ while running:
                     posicoes.write(str(posicao)+"\n")
                     pygame.draw.circle(espaco,branco,(x,y),5)    
             
-
-
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_F11:
             with open("posicoes.txt", "r") as posicoes:
                 iter_posicoes = iter(posicoes)
@@ -110,36 +103,29 @@ while running:
                         w, z= map(int, coordenadas.strip()[1:-1].split(","))
                         nomes_coordenadas.append((nome, w, z))
                 
-        
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_F12:
             result = messagebox.askyesno("Confirmação", "Deseja realmente apagar os pontos salvos?")
             if result:
                 pass
             else:
                 continuarLoop = False
-
             if continuarLoop:
                 with open("posicoes.txt", "w") as posicoes:
-                    posicoes.write = ""
-                    
+                    posicoes.write = ""          
                 with open("nomePosicao.txt", "w") as nomePosicao:
-                    nomePosicao.write = ""
-                    
-                
+                    nomePosicao.write = ""      
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_F10:
             try:
                 nomePosicao.close()
                 posicoes.close()
                 messagebox.showinfo("","Pontos salvos com sucesso!")
             except:
-                messagebox.showinfo("ERRO","Não há pontos para salvar!")
-
-    
+                messagebox.showinfo("ERRO","Não há pontos para salvar!")    
     for nome, w, z in nomes_coordenadas:
         texto_renderizado = texto.render(nome+coordenadas, True, branco)
         tela.blit(texto_renderizado, (w, z))
         pygame.display.update(tela.blit(texto_renderizado, (w, z)))
-
+#Tela
     tela.blit( espaco, (0, 0) )
     tela.blit(renderdotextoF10, (textoX, textoYF10))
     tela.blit(renderdotextoF11, (textoX, textoYF11))
