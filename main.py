@@ -122,7 +122,7 @@ while running:
             except:
                 messagebox.showinfo("ERRO","Não há pontos para salvar!")    
     for nome, w, z in nomes_coordenadas:
-        texto_renderizado = texto.render(nome+coordenadas, True, branco)
+        texto_renderizado = texto.render(nome+": "+('(')+(str(w)+", "+str(z))+(')'), True, branco)
         tela.blit(texto_renderizado, (w, z))
         pygame.display.update(tela.blit(texto_renderizado, (w, z)))
 #Tela
