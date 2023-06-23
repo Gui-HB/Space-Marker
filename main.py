@@ -26,14 +26,14 @@ except:
     pygame.quit()
 # Texto das opções
 textoX = 20
-textoYF10 = 20
-textoYF11 = 50
-textoYF12 = 80
+textoY = 20
+
 texto = pygame.font.Font(None, 24)
 fonte_nome_estrela = pygame.font.Font(None, 24)
+renderdotextoF9 = texto.render("Pressione F9 para limpar a tela!", True, branco)
 renderdotextoF10 = texto.render("Pressione F10 para salvar os pontos!", True, branco)
-renderdotextoF11 = texto.render("Pressione F11 para Carregar os pontos!", True, branco)
-renderdotextoF12 = texto.render("Pressione F12 para Deletar os pontos!", True, branco)
+renderdotextoF11 = texto.render("Pressione F11 para carregar os pontos!", True, branco)
+renderdotextoF12 = texto.render("Pressione F12 para deletar os pontos!", True, branco)
 #Inicio do While principal do programa
 while running:
     for event in pygame.event.get():
@@ -80,8 +80,16 @@ while running:
                     nomePosicao.write(str(nomeEstrela)+"\n")
                 with open("posicoes.txt", "a") as posicoes:
                     posicoes.write(str(posicao)+"\n")
-                    pygame.draw.circle(espaco,branco,(x,y),5)    
-            
+                    pygame.draw.circle(espaco,branco,(x,y),5)  
+
+        elif event.type == pygame.KEYDOWN and event.key == pygame.K_F9:
+            espaco.fill(preto)
+            nomes_coordenadas = []
+            estrelas = {}
+            posicao = ()
+            primeiroClique = True          
+            espaco = pygame.image.load("espaco1.jpg")   
+
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_F11:
             with open("posicoes.txt", "r") as posicoes:
                 iter_posicoes = iter(posicoes)
@@ -133,9 +141,10 @@ while running:
         pygame.display.update(tela.blit(texto_renderizado, (w, z)))
 #Tela
     tela.blit( espaco, (0, 0) )
-    tela.blit(renderdotextoF10, (textoX, textoYF10))
-    tela.blit(renderdotextoF11, (textoX, textoYF11))
-    tela.blit(renderdotextoF12, (textoX, textoYF12))
+    tela.blit(renderdotextoF9, (textoX, textoY))
+    tela.blit(renderdotextoF10, (textoX, textoY+20))
+    tela.blit(renderdotextoF11, (textoX, textoY+40))
+    tela.blit(renderdotextoF12, (textoX, textoY+60))
 
     for nome, posicao in estrelas.items():
         nome_surface = fonte_nome_estrela.render(nome, True, branco)
