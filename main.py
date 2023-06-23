@@ -106,6 +106,12 @@ while running:
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_F12:
             result = messagebox.askyesno("Confirmação", "Deseja realmente apagar os pontos salvos?")
             if result:
+                nomes_coordenadas = []
+                estrelas = {}
+                posicao = ()
+                primeiroClique = True
+                espaco.fill(preto)             
+                espaco = pygame.image.load("espaco1.jpg")
                 pass
             else:
                 continuarLoop = False
